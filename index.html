@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-K1QJyOaYBC2leCei7ieKqDQCiNngD+XG4I9dh5jB+d8='; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'">
+<title>Back to Telegram</title>
+<style>
+  body { font: 18px/1.5 system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin: 0; padding: 48px 24px; text-align: center; color: #1f1f1f; background: #fafafa; }
+  a { display: inline-block; margin-top: 24px; padding: 14px 28px; border-radius: 10px; background: #2aabee; color: #fff; text-decoration: none; font-weight: 600; }
+</style>
+</head>
+<body>
+<p id="msg">Kite login done. Opening Telegram: tap START in the bot.</p>
+<a id="go" hidden>Open the bot</a>
+<script>(function () {
+  var BOT = "aazath_exec_3258_bot";
+  var q = new URLSearchParams(window.location.search);
+  var token = q.get("request_token") || "";
+  var ok = q.get("status") === "success" && /^[A-Za-z0-9]{16,64}$/.test(token);
+  history.replaceState(null, "", window.location.pathname);
+  if (!ok) {
+    document.getElementById("msg").textContent = "The Kite login did not finish. Go back to Telegram and tap Log in to Kite again.";
+    return;
+  }
+  var link = "https://t.me/" + BOT + "?start=" + token;
+  var a = document.getElementById("go");
+  a.href = link;
+  a.hidden = false;
+  window.location.replace(link);
+})();</script>
+</body>
+</html>
